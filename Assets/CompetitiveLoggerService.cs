@@ -101,13 +101,28 @@ class CompetitiveLogHandler : ILogHandler {
     }
 
     public void enableLogOutput() {
+        // Determine if the log was previously enabled
+        bool wasEnabled = this.isLogOutputEnabled;
+
+        // Enable log output
         this.isLogOutputEnabled = true;
-        Debug.Log("[CompetitiveLogger] Log output enabled.");
+
+        // If the log was already enabled, don't log
+        if (!wasEnabled) {
+            Debug.Log("[CompetitiveLogger] Log output enabled.");
+        }
+
+        // Dump the cache
         this.dumpCache();
     }
 
     public void disableLogOutput() {
-        Debug.Log("[CompetitiveLogger] Log output disabled.");
+        // If the log was already disabled, don't log
+        if (this.isLogOutputEnabled) {
+            Debug.Log("[CompetitiveLogger] Log output disabled.");
+        }
+
+        // Disable log output
         this.isLogOutputEnabled = false;
     }
 }
