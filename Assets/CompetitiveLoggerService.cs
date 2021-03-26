@@ -69,6 +69,9 @@ class CompetitiveLogHandler : ILogHandler {
     }
 
     public void LogFormat(LogType logType, UnityEngine.Object context, string format, params object[] args) {
+        // DBML compatibility
+        if (args.Length > 0 && args[0].ToString().StartsWith("[BombGenerator] Bomb component list: "))
+            oldLogger.LogFormat(logType, context, format, "[BombGenerator] Bomb component list: [Removed by Competitive Logger]");
         // If log output is disabled, add the record to the queue
         if (this.isLogOutputEnabled) {
             oldLogger.LogFormat(logType, context, format, args);
